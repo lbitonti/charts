@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fluxcloud.fullname" . }}
+  labels:
+    app: {{ template "fluxcloud.name" . }}
+    chart: {{ template "fluxcloud.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "fluxcloud.name" . }}
+      release: {{ .Release.Name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ template "fluxcloud.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: fluxcloud
+        image: "{{ .Values.imageRepository }}:{{ .Values.imageTag }}"
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        ports:
+        - containerPort: {{ .Values.serviceTargetPort }}
+        {{- if .Values.extraEnvs }}
+        env:
+{{ toYaml .Values.extraEnvs | indent 8 }}
+        {{- end }}

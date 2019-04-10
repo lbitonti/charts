@@ -1,0 +1,12 @@
+apiVersion: v1
+appVersion: "0.3.4"
+version: 0.0.2
+kubeVersion: ">=1.9.0-0"
+name: fluxcloud
+description: Fluxcloud is a tool to receive events from the Weave flux. It allows to send Flux events to Slack or a webhook without using Weave Cloud.
+home: https://github.com/justinbarrick/fluxcloud
+sources:
+- https://github.com/justinbarrick/fluxcloud
+keywords:
+- gitops
+- flux
